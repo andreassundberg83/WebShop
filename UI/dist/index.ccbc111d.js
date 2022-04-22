@@ -1006,13 +1006,156 @@ try {
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDom = require("react-dom");
+var _navbar = require("./navbar");
+var _products = require("./Products/products");
+var _orders = require("./Orders/orders");
+var _users = require("./Users/users");
+var _login = require("./Login/login");
 class App extends _react.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            showLogin: true,
+            showProducts: false,
+            showOrders: false,
+            showUsers: false,
+            isAdmin: false,
+            loggedIn: false,
+            myApiUrl: ''
+        };
+        this.showSelectedPage = this.showSelectedPage.bind(this);
+        this.setAdmin = this.setAdmin.bind(this);
+        this.setLoggedIn = this.setLoggedIn.bind(this);
+    }
+    componentDidMount() {
+        let json = require('./apiurl.json');
+        let readstring = json.apiurl;
+        console.log(readstring);
+        this.setState({
+            myApiUrl: readstring
+        });
+    }
+    showSelectedPage = (component)=>{
+        switch(component){
+            case 1:
+                this.setState({
+                    showLogin: true,
+                    showProducts: false,
+                    showOrders: false,
+                    showUsers: false
+                });
+                break;
+            case 2:
+                this.setState({
+                    showLogin: false,
+                    showProducts: true,
+                    showOrders: false,
+                    showUsers: false
+                });
+                break;
+            case 3:
+                this.setState({
+                    showLogin: false,
+                    showProducts: false,
+                    showOrders: true,
+                    showUsers: false
+                });
+                break;
+            case 4:
+                this.setState({
+                    showLogin: false,
+                    showProducts: false,
+                    showOrders: false,
+                    showUsers: true
+                });
+                break;
+            case 5:
+                this.setState({
+                    showLogin: true,
+                    showProducts: false,
+                    showOrders: false,
+                    showUsers: false
+                });
+                localStorage.removeItem('jwtbearer');
+                localStorage.removeItem('userId');
+                this.setState({
+                    isAdmin: false,
+                    loggedIn: false
+                });
+                break;
+            default:
+                this.setState({
+                    showLogin: true,
+                    showProducts: false,
+                    showOrders: false,
+                    showUsers: false
+                });
+                break;
+        }
+    };
+    setAdmin(value) {
+        this.setState({
+            isAdmin: value
+        });
+    }
+    setLoggedIn() {
+        this.setState({
+            loggedIn: true
+        });
+    }
     render() {
-        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
-            children: "Ers\xe4tt detta med din huvudkomponent"
-        }, void 0, false, {
+        const { showLogin , showProducts , showOrders , showUsers  } = this.state;
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_navbar.Navbar, {
+                    isLoggedIn: this.state.loggedIn,
+                    showPage: this.showSelectedPage
+                }, void 0, false, {
+                    fileName: "src/scripts/app.jsx",
+                    lineNumber: 103,
+                    columnNumber: 17
+                }, this),
+                showLogin && /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_login.Login, {
+                    isLoggedIn: this.state.loggedIn,
+                    myApiUrl: this.state.myApiUrl,
+                    onLogIn: this.setLoggedIn,
+                    onAdminSet: this.setAdmin,
+                    onGoToPage: this.showSelectedPage
+                }, void 0, false, {
+                    fileName: "src/scripts/app.jsx",
+                    lineNumber: 104,
+                    columnNumber: 31
+                }, this),
+                showProducts && /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_products.Products, {
+                    myApiUrl: this.state.myApiUrl,
+                    isAdmin: this.state.isAdmin
+                }, void 0, false, {
+                    fileName: "src/scripts/app.jsx",
+                    lineNumber: 105,
+                    columnNumber: 35
+                }, this),
+                showOrders && /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_orders.Orders, {
+                    myApiUrl: this.state.myApiUrl,
+                    isAdmin: this.state.isAdmin
+                }, void 0, false, {
+                    fileName: "src/scripts/app.jsx",
+                    lineNumber: 106,
+                    columnNumber: 32
+                }, this),
+                showUsers && /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_users.Users, {
+                    myApiUrl: this.state.myApiUrl,
+                    showPage: this.showSelectedPage,
+                    loggedIn: this.state.loggedIn,
+                    isAdmin: this.state.isAdmin
+                }, void 0, false, {
+                    fileName: "src/scripts/app.jsx",
+                    lineNumber: 107,
+                    columnNumber: 31
+                }, this)
+            ]
+        }, void 0, true, {
             fileName: "src/scripts/app.jsx",
-            lineNumber: 7,
+            lineNumber: 102,
             columnNumber: 13
         }, this));
     }
@@ -1020,7 +1163,7 @@ class App extends _react.Component {
 _reactDom.render(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(App, {
 }, void 0, false, {
     fileName: "src/scripts/app.jsx",
-    lineNumber: 13,
+    lineNumber: 115,
     columnNumber: 17
 }, undefined), document.getElementById("root"));
 
@@ -1029,7 +1172,7 @@ _reactDom.render(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(App, {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iTorj":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./navbar":"j6qyo","./Products/products":"cEkmA","./Orders/orders":"b5aDl","./Users/users":"9bnTD","./Login/login":"cadv7","./apiurl.json":"d2rMc"}],"iTorj":[function(require,module,exports) {
 'use strict';
 module.exports = require('./cjs/react-jsx-dev-runtime.development.js');
 
@@ -22895,6 +23038,2450 @@ function registerExportsForReactRefresh(module) {
     }
 }
 
-},{"react-refresh/runtime":"786KC"}]},["kn9T2","7kjSf","6zlig"], "6zlig", "parcelRequiref4f1")
+},{"react-refresh/runtime":"786KC"}],"j6qyo":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$4223 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$4223.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Navbar", ()=>Navbar
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDom = require("react-dom");
+class Navbar extends _react.Component {
+    constructor(props){
+        super(props);
+        this.toggleComponent = this.toggleComponent.bind(this);
+    }
+    toggleComponent(component) {
+        this.props.showPage(component);
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("nav", {
+            className: "navbar navbar-expand-lg navbar-dark bg-dark",
+            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                className: "container-fluid",
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                        className: "navbar-brand btn",
+                        onClick: ()=>this.toggleComponent(1)
+                        ,
+                        children: "Inloggning"
+                    }, void 0, false, {
+                        fileName: "src/scripts/navbar.jsx",
+                        lineNumber: 18,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                        disabled: !this.props.isLoggedIn,
+                        className: "navbar-brand btn",
+                        onClick: ()=>this.toggleComponent(2)
+                        ,
+                        children: "Produkter"
+                    }, void 0, false, {
+                        fileName: "src/scripts/navbar.jsx",
+                        lineNumber: 19,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                        disabled: !this.props.isLoggedIn,
+                        className: "navbar-brand btn",
+                        onClick: ()=>this.toggleComponent(3)
+                        ,
+                        children: "Ordrar"
+                    }, void 0, false, {
+                        fileName: "src/scripts/navbar.jsx",
+                        lineNumber: 20,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                        disabled: !this.props.isLoggedIn,
+                        className: "navbar-brand btn",
+                        onClick: ()=>this.toggleComponent(4)
+                        ,
+                        children: "Anv\xe4ndare"
+                    }, void 0, false, {
+                        fileName: "src/scripts/navbar.jsx",
+                        lineNumber: 21,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                        disabled: !this.props.isLoggedIn,
+                        className: "navbar-brand btn",
+                        onClick: ()=>this.toggleComponent(5)
+                        ,
+                        children: "Logga ut"
+                    }, void 0, false, {
+                        fileName: "src/scripts/navbar.jsx",
+                        lineNumber: 22,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/scripts/navbar.jsx",
+                lineNumber: 17,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "src/scripts/navbar.jsx",
+            lineNumber: 16,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$4223.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"cEkmA":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$82ec = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$82ec.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Products", ()=>Products
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _productsForm = require("./products-form");
+var _productsNavbar = require("./products-navbar");
+var _product = require("./product");
+var _cart = require("./cart");
+var _cartproduct = require("./cartproduct");
+class Products extends _react.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            showProducts: false,
+            showAdmin: false,
+            products: [],
+            productsInCart: [],
+            orderSum: 0
+        };
+        this.showSelectedPage = this.showSelectedPage.bind(this);
+        this.addList = this.addList.bind(this);
+        this.addToCart = this.addToCart.bind(this);
+        this.sendOrder = this.sendOrder.bind(this);
+    }
+    showSelectedPage = (component)=>{
+        switch(component){
+            case 1:
+                this.setState({
+                    showProducts: true,
+                    showAdmin: false
+                });
+                break;
+            case 2:
+                this.setState({
+                    showProducts: false,
+                    showAdmin: true
+                });
+                break;
+            default:
+                break;
+        }
+    };
+    addList(list) {
+        let productsList = [];
+        list.forEach((x)=>productsList.push(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_product.Product, {
+                productAdded: this.addToCart,
+                sortByCategory: this.categorySort,
+                ...x
+            }, x.Id + x.name, false, {
+                fileName: "src/scripts/Products/products.jsx",
+                lineNumber: 42,
+                columnNumber: 45
+            }, this))
+        );
+        this.setState({
+            products: productsList
+        });
+    }
+    categorySort = (id)=>{
+        let productsList = this.state.products.filter((x)=>x.props.categoryId == id
+        );
+        this.setState({
+            products: productsList
+        });
+    };
+    addToCart = (id)=>{
+        let productsInCartList = this.state.productsInCart;
+        let sum = this.state.orderSum;
+        if (productsInCartList.some((x)=>x.props.id === id
+        )) {
+            const index = productsInCartList.findIndex((x)=>x.props.id === id
+            );
+            const product = productsInCartList[index];
+            const cartProduct = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cartproduct.CartProduct, {
+                price: product.props.price,
+                id: product.props.id,
+                quantity: product.props.quantity + 1,
+                name: product.props.name
+            }, id, false, {
+                fileName: "src/scripts/Products/products.jsx",
+                lineNumber: 59,
+                columnNumber: 33
+            }, this);
+            productsInCartList[index] = cartProduct;
+            sum += product.props.price;
+        } else {
+            let product = this.state.products.find((x)=>x.props.id === id
+            );
+            const cartProduct = /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cartproduct.CartProduct, {
+                price: product.props.price,
+                id: product.props.id,
+                quantity: 1,
+                name: product.props.name
+            }, id, false, {
+                fileName: "src/scripts/Products/products.jsx",
+                lineNumber: 65,
+                columnNumber: 33
+            }, this);
+            productsInCartList.push(cartProduct);
+            sum += product.props.price;
+        }
+        this.setState({
+            productsInCart: productsInCartList
+        });
+        this.setState({
+            orderSum: sum
+        });
+    };
+    sendOrder() {
+        const fetchurl = this.props.myApiUrl + "/Orders";
+        let cart = [];
+        this.state.productsInCart.forEach((x)=>{
+            cart.push({
+                productId: x.props.id,
+                quantity: x.props.quantity
+            });
+        });
+        let data = JSON.stringify({
+            userId: localStorage.getItem("userId"),
+            cart: cart
+        });
+        fetch(fetchurl, {
+            method: 'post',
+            headers: {
+                'accept': '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('jwtbearer')}`
+            },
+            body: data
+        }).then((res)=>{
+            console.log(res);
+            if (res.status === 200) res.json().then((x)=>{
+                let message = `Ordern lyckades!\n\nOrdernummer: ${x.id}\n`;
+                for(let i = 0; i < x.cart.length; i++)message += `\n${x.cart[i].quantity} st ${x.cart[i].productName}`;
+                message += `\nSumma: ${x.sum}`;
+                alert(message);
+                this.setState({
+                    productsInCart: []
+                });
+            });
+            else alert("Något gick fel.");
+        });
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            className: "row",
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_productsNavbar.ProductNavbar, {
+                    myApiUrl: this.props.myApiUrl,
+                    isAdmin: this.props.isAdmin,
+                    showPage: this.showSelectedPage,
+                    onGetList: this.addList
+                }, void 0, false, {
+                    fileName: "src/scripts/Products/products.jsx",
+                    lineNumber: 119,
+                    columnNumber: 17
+                }, this),
+                this.state.showAdmin && /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_productsForm.ProductsForm, {
+                    myApiUrl: this.props.myApiUrl,
+                    products: this.state.products
+                }, void 0, false, {
+                    fileName: "src/scripts/Products/products.jsx",
+                    lineNumber: 120,
+                    columnNumber: 42
+                }, this),
+                this.state.showProducts && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_cart.Cart, {
+                            onSendOrder: this.sendOrder,
+                            sum: this.state.orderSum,
+                            cart: this.state.productsInCart
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/products.jsx",
+                            lineNumber: 122,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("ul", {
+                            className: "row justify-content-around",
+                            children: this.state.products
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/products.jsx",
+                            lineNumber: 123,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Products/products.jsx",
+                    lineNumber: 121,
+                    columnNumber: 45
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/scripts/Products/products.jsx",
+            lineNumber: 118,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$82ec.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./products-form":"81xS3","./products-navbar":"2Orum","./product":"2f3OQ","./cart":"76EzA","./cartproduct":"dlKIy","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"81xS3":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$1fff = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$1fff.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/*Det här är verkligen inte en snygg klass, men den funkar, så den får se ut så här*/ parcelHelpers.export(exports, "ProductsForm", ()=>ProductsForm
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+class ProductsForm extends _react.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            name: '',
+            description: '',
+            categoryName: '',
+            articleNumber: '',
+            price: 0,
+            selectedUpdateId: 0,
+            updateName: '',
+            updateDescription: '',
+            updateCategoryName: '',
+            updateArticleNumber: '',
+            updatePrice: 0,
+            selectedDeleteId: 0
+        };
+        this.changeName = this.changeName.bind(this);
+        this.changeDescription = this.changeDescription.bind(this);
+        this.changeCategory = this.changeCategory.bind(this);
+        this.changeArticleNumber = this.changeArticleNumber.bind(this);
+        this.changePrice = this.changePrice.bind(this);
+        this.changeUpdateName = this.changeUpdateName.bind(this);
+        this.changeUpdateDescription = this.changeUpdateDescription.bind(this);
+        this.changeUpdateCategoryName = this.changeUpdateCategoryName.bind(this);
+        this.changeUpdateArticleNumber = this.changeUpdateArticleNumber.bind(this);
+        this.changeUpdatePrice = this.changeUpdatePrice.bind(this);
+        this.changeSelectedUpdateId = this.changeSelectedUpdateId.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.updateItem = this.updateItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
+    }
+    changeName(event) {
+        this.setState({
+            name: event.target.value
+        });
+    }
+    changeDescription(event) {
+        this.setState({
+            description: event.target.value
+        });
+    }
+    changeCategory(event) {
+        this.setState({
+            categoryName: event.target.value
+        });
+    }
+    changeArticleNumber(event) {
+        this.setState({
+            articleNumber: event.target.value
+        });
+    }
+    changePrice(event) {
+        this.setState({
+            price: event.target.value
+        });
+    }
+    changeSelectedUpdateId = (event)=>{
+        let product = this.props.products.find((x)=>x.props.id == event.target.value
+        );
+        this.setState({
+            selectedUpdateId: event.target.value,
+            updateName: product.props.name,
+            updateDescription: product.props.description,
+            updateCategoryName: product.props.categoryName,
+            updateArticleNumber: product.props.articleNumber,
+            updatePrice: product.props.price
+        });
+    };
+    changeUpdateName = (event)=>this.setState({
+            updateName: event.target.value
+        })
+    ;
+    changeUpdateDescription = (event)=>this.setState({
+            updateDescription: event.target.value
+        })
+    ;
+    changeUpdatePrice = (event)=>this.setState({
+            updatePrice: event.target.value
+        })
+    ;
+    changeUpdateArticleNumber = (event)=>this.setState({
+            updateArticleNumber: event.target.value
+        })
+    ;
+    changeUpdateCategoryName = (event)=>this.setState({
+            updateCategoryName: event.target.value
+        })
+    ;
+    changeSelectedDeleteId = (event)=>this.setState({
+            selectedDeleteId: event.target.value
+        })
+    ;
+    addItem = (event)=>{
+        let data = JSON.stringify({
+            name: this.state.name,
+            description: this.state.description,
+            price: this.state.price,
+            categoryName: this.state.categoryName,
+            articleNumber: this.state.articleNumber
+        });
+        let fetchurl = this.props.myApiUrl + "/Products";
+        fetch(fetchurl, {
+            method: 'post',
+            headers: {
+                'accept': '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('jwtbearer')}`
+            },
+            body: data
+        }).then((res)=>res.json()
+        ).then((l)=>{
+            console.log(l);
+            alert(`Produkt ${l.name} skapades.`);
+        });
+        event.preventDefault();
+    };
+    updateItem = (event)=>{
+        if (this.state.selectedUpdateId === 0) {
+            alert("Du måste välja ett produktId");
+            event.preventDefault();
+            return;
+        }
+        let data = JSON.stringify({
+            name: this.state.updateName,
+            description: this.state.updateDescription,
+            price: this.state.updatePrice,
+            categoryName: this.state.updateCategoryName,
+            articleNumber: this.state.updateArticleNumber
+        });
+        let fetchurl = this.props.myApiUrl + "/Products/" + `${this.state.selectedUpdateId}`;
+        console.log(fetchurl);
+        console.log(data);
+        fetch(fetchurl, {
+            method: 'put',
+            headers: {
+                'accept': '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('jwtbearer')}`
+            },
+            body: data
+        }).then((res)=>res.json()
+        ).then((l)=>{
+            console.log(l);
+            alert(`Produkt ${l.name} uppdaterades.`);
+        });
+        event.preventDefault();
+    };
+    deleteItem(event) {
+        if (this.state.selectedDeleteId === 0) {
+            alert("Du måste välja ett produktId");
+            event.preventDefault();
+            return;
+        }
+        let fetchurl = this.props.myApiUrl + "/Products/" + `${this.state.selectedDeleteId}`;
+        fetch(fetchurl, {
+            method: 'delete',
+            headers: {
+                'accept': '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('jwtbearer')}`
+            }
+        }).then((res)=>{
+            if (res.status === 200) alert("Produkt borttagen");
+            else alert("Något gick fel");
+        });
+        event.preventDefault();
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("form", {
+                    autoComplete: "off",
+                    className: "productForm",
+                    onSubmit: this.addItem,
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h3", {
+                            children: "L\xe4gg till produkt"
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/products-form.jsx",
+                            lineNumber: 157,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                            className: "mb-3",
+                            children: [
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "form-label",
+                                    children: "Produktnamn"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 159,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                    required: true,
+                                    className: "form-control col-4",
+                                    type: "text",
+                                    value: this.state.name,
+                                    onChange: this.changeName
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 160,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "form-label",
+                                    children: "Beskrivning"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 161,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                    required: true,
+                                    className: "form-control col-4",
+                                    type: "text",
+                                    value: this.state.description,
+                                    onChange: this.changeDescription
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 162,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "form-label",
+                                    children: "Kategori"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 163,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                    required: true,
+                                    className: "form-control col-4",
+                                    type: "text",
+                                    value: this.state.categoryName,
+                                    onChange: this.changeCategory
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 164,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "form-label",
+                                    children: "Artikelnummer"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 165,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                    required: true,
+                                    className: "form-control col-4",
+                                    type: "text",
+                                    value: this.state.articlenumber,
+                                    onChange: this.changeArticleNumber
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 166,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "form-label",
+                                    children: "Pris"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 167,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                    required: true,
+                                    className: "form-control col-4",
+                                    type: "number",
+                                    value: this.state.price,
+                                    onChange: this.changePrice
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 168,
+                                    columnNumber: 25
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/scripts/Products/products-form.jsx",
+                            lineNumber: 158,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                            type: "submit",
+                            className: "btn btn-primary",
+                            value: "L\xe4gg till"
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/products-form.jsx",
+                            lineNumber: 171,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Products/products-form.jsx",
+                    lineNumber: 156,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("br", {
+                }, void 0, false, {
+                    fileName: "src/scripts/Products/products-form.jsx",
+                    lineNumber: 173,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("br", {
+                }, void 0, false, {
+                    fileName: "src/scripts/Products/products-form.jsx",
+                    lineNumber: 174,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("form", {
+                    autoComplete: "off",
+                    className: "productForm",
+                    onSubmit: this.updateItem,
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h3", {
+                            children: "Uppdatera produkt"
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/products-form.jsx",
+                            lineNumber: 176,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                            className: "mb-3",
+                            children: [
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "form-label",
+                                    children: "ProduktId"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 178,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                    className: "col-1",
+                                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("select", {
+                                        required: true,
+                                        className: "form-control col-4",
+                                        type: "text",
+                                        id: "productName",
+                                        value: this.state.selectedUpdateId,
+                                        onChange: this.changeSelectedUpdateId,
+                                        children: this.props.products.map((x)=>/*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                                children: x.props.id
+                                            }, x.props.id, false, {
+                                                fileName: "src/scripts/Products/products-form.jsx",
+                                                lineNumber: 181,
+                                                columnNumber: 63
+                                            }, this)
+                                        )
+                                    }, void 0, false, {
+                                        fileName: "src/scripts/Products/products-form.jsx",
+                                        lineNumber: 180,
+                                        columnNumber: 29
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 179,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "form-label",
+                                    children: "Produktnamn"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 184,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                    required: true,
+                                    className: "form-control col-4",
+                                    type: "text",
+                                    value: this.state.updateName,
+                                    onChange: this.changeUpdateName
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 185,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "form-label",
+                                    children: "Beskrivning"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 186,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                    required: true,
+                                    className: "form-control col-4",
+                                    type: "text",
+                                    value: this.state.updateDescription,
+                                    onChange: this.changeUpdateDescription
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 187,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "form-label",
+                                    children: "Kategori"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 188,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                    required: true,
+                                    className: "form-control col-4",
+                                    type: "text",
+                                    value: this.state.updateCategoryName,
+                                    onChange: this.changeUpdateCategoryName
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 189,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "form-label",
+                                    children: "Artikelnummer"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 190,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                    required: true,
+                                    className: "form-control col-4",
+                                    type: "text",
+                                    value: this.state.updateArticleNumber,
+                                    onChange: this.changeUpdateArticleNumber
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 191,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "form-label",
+                                    children: "Pris"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 192,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                    required: true,
+                                    className: "form-control col-4",
+                                    type: "number",
+                                    value: this.state.updatePrice,
+                                    onChange: this.changeUpdatePrice
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Products/products-form.jsx",
+                                    lineNumber: 193,
+                                    columnNumber: 25
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/scripts/Products/products-form.jsx",
+                            lineNumber: 177,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                            type: "submit",
+                            className: "btn btn-primary",
+                            value: "Uppdatera"
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/products-form.jsx",
+                            lineNumber: 196,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Products/products-form.jsx",
+                    lineNumber: 175,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("br", {
+                }, void 0, false, {
+                    fileName: "src/scripts/Products/products-form.jsx",
+                    lineNumber: 198,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("br", {
+                }, void 0, false, {
+                    fileName: "src/scripts/Products/products-form.jsx",
+                    lineNumber: 199,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("form", {
+                    autoComplete: "off",
+                    className: "productForm",
+                    onSubmit: this.deleteItem,
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h3", {
+                            children: "Ta bort produkt"
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/products-form.jsx",
+                            lineNumber: 201,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                            className: "col-1",
+                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("select", {
+                                defaultValue: "id",
+                                required: true,
+                                className: "form-control col-4",
+                                type: "text",
+                                value: this.state.selectedDeleteId,
+                                onChange: this.changeSelectedDeleteId,
+                                children: this.props.products.map((x)=>/*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                        children: x.props.id
+                                    }, x.props.id, false, {
+                                        fileName: "src/scripts/Products/products-form.jsx",
+                                        lineNumber: 204,
+                                        columnNumber: 59
+                                    }, this)
+                                )
+                            }, void 0, false, {
+                                fileName: "src/scripts/Products/products-form.jsx",
+                                lineNumber: 203,
+                                columnNumber: 25
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/products-form.jsx",
+                            lineNumber: 202,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                            className: "col-2",
+                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                type: "submit",
+                                className: "btn btn-danger",
+                                value: "Delete"
+                            }, void 0, false, {
+                                fileName: "src/scripts/Products/products-form.jsx",
+                                lineNumber: 207,
+                                columnNumber: 44
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/products-form.jsx",
+                            lineNumber: 207,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Products/products-form.jsx",
+                    lineNumber: 200,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/scripts/Products/products-form.jsx",
+            lineNumber: 155,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$1fff.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"2Orum":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$5ba1 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$5ba1.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ProductNavbar", ()=>ProductNavbar
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDom = require("react-dom");
+var _product = require("./product");
+class ProductNavbar extends _react.Component {
+    constructor(props){
+        super(props);
+        this.toggleComponent = this.toggleComponent.bind(this);
+    }
+    componentDidMount() {
+        this.toggleComponent(1);
+    }
+    toggleComponent(component) {
+        let fetchurl = this.props.myApiUrl + "/products";
+        fetch(fetchurl, {
+            'method': 'get',
+            'headers': {
+                'accept': '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('jwtbearer')}`
+            }
+        }).then((res)=>{
+            if (res.status == 200) res.json().then((list)=>{
+                this.sendList(list);
+            });
+            else alert("Något gick fel, kontrollera om du är inloggad.");
+        });
+        this.props.showPage(component);
+    }
+    sendList = (list)=>{
+        this.props.onGetList(list);
+    };
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("nav", {
+            className: "navbar navbar-default",
+            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                className: "container-fluid",
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                        className: "navbar-brand btn",
+                        onClick: ()=>this.toggleComponent(1)
+                        ,
+                        children: "Se produkter"
+                    }, void 0, false, {
+                        fileName: "src/scripts/Products/products-navbar.jsx",
+                        lineNumber: 46,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                        disabled: !this.props.isAdmin,
+                        className: "navbar-brand btn",
+                        onClick: ()=>this.toggleComponent(2)
+                        ,
+                        children: "Admin"
+                    }, void 0, false, {
+                        fileName: "src/scripts/Products/products-navbar.jsx",
+                        lineNumber: 47,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/scripts/Products/products-navbar.jsx",
+                lineNumber: 45,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "src/scripts/Products/products-navbar.jsx",
+            lineNumber: 44,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$5ba1.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","./product":"2f3OQ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"2f3OQ":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$369e = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$369e.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Product", ()=>Product
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+class Product extends _react.Component {
+    constructor(props){
+        super(props);
+        this.getByCategory = this.getByCategory.bind(this);
+        this.addToCart = this.addToCart.bind(this);
+    }
+    addToCart = ()=>this.props.productAdded(this.props.id)
+    ;
+    getByCategory(categoryId) {
+        this.props.sortByCategory(categoryId);
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
+            className: "products col-md-12 col-lg-5 row",
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h6", {
+                    className: "col-12",
+                    children: this.props.name
+                }, void 0, false, {
+                    fileName: "src/scripts/Products/product.jsx",
+                    lineNumber: 17,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                    className: "col-12",
+                    children: this.props.description
+                }, void 0, false, {
+                    fileName: "src/scripts/Products/product.jsx",
+                    lineNumber: 18,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                    className: "col-12",
+                    children: [
+                        "Pris: ",
+                        this.props.price
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Products/product.jsx",
+                    lineNumber: 19,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                    className: "col-12 row justify-content-between",
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("span", {
+                            className: "col-12 col-md-8 mybutton",
+                            onClick: ()=>this.getByCategory(this.props.categoryId)
+                            ,
+                            children: this.props.categoryName
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/product.jsx",
+                            lineNumber: 21,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                            className: "col-12 col-md-4 btn btn-success",
+                            onClick: this.addToCart,
+                            children: "L\xe4gg i varukorg"
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/product.jsx",
+                            lineNumber: 22,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Products/product.jsx",
+                    lineNumber: 20,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/scripts/Products/product.jsx",
+            lineNumber: 16,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$369e.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"76EzA":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$59a4 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$59a4.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Cart", ()=>Cart
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _cartproduct = require("./cartproduct");
+class Cart extends _react.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            showProducts: false
+        };
+        this.toggleShow = this.toggleShow.bind(this);
+        this.sendOrder = this.sendOrder.bind(this);
+    }
+    toggleShow() {
+        this.setState({
+            showProducts: !this.state.showProducts
+        });
+    }
+    sendOrder() {
+        this.props.onSendOrder();
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            className: "cart",
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h5", {
+                    children: "Din kundvagn"
+                }, void 0, false, {
+                    fileName: "src/scripts/Products/cart.jsx",
+                    lineNumber: 25,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                    className: "mybutton",
+                    onClick: this.toggleShow,
+                    children: this.state.showProducts ? "Dölj varor" : "Visa varor"
+                }, void 0, false, {
+                    fileName: "src/scripts/Products/cart.jsx",
+                    lineNumber: 26,
+                    columnNumber: 17
+                }, this),
+                this.state.showProducts && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("ul", {
+                            children: this.props.cart
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/cart.jsx",
+                            lineNumber: 28,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("ul", {
+                            className: "topborder",
+                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
+                                className: "row noPaddingAndMargin",
+                                children: [
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("span", {
+                                        className: "col-7 noPaddingAndMargin",
+                                        children: "Summa:"
+                                    }, void 0, false, {
+                                        fileName: "src/scripts/Products/cart.jsx",
+                                        lineNumber: 31,
+                                        columnNumber: 29
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                        className: "col-5 row noPaddingAndMargin",
+                                        children: [
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("span", {
+                                                className: "col-6 inCartProduct"
+                                            }, void 0, false, {
+                                                fileName: "src/scripts/Products/cart.jsx",
+                                                lineNumber: 33,
+                                                columnNumber: 33
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("span", {
+                                                className: "col-6 inCartProduct",
+                                                children: [
+                                                    this.props.sum,
+                                                    " kr"
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "src/scripts/Products/cart.jsx",
+                                                lineNumber: 34,
+                                                columnNumber: 33
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "src/scripts/Products/cart.jsx",
+                                        lineNumber: 32,
+                                        columnNumber: 29
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/scripts/Products/cart.jsx",
+                                lineNumber: 30,
+                                columnNumber: 25
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/cart.jsx",
+                            lineNumber: 29,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                            className: "col-2",
+                            onClick: this.sendOrder,
+                            children: "Skicka order"
+                        }, void 0, false, {
+                            fileName: "src/scripts/Products/cart.jsx",
+                            lineNumber: 38,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Products/cart.jsx",
+                    lineNumber: 27,
+                    columnNumber: 45
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/scripts/Products/cart.jsx",
+            lineNumber: 24,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$59a4.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./cartproduct":"dlKIy","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"dlKIy":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$357d = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$357d.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "CartProduct", ()=>CartProduct
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+class CartProduct extends _react.Component {
+    constructor(props){
+        super(props);
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
+            className: "row noPaddingAndMargin",
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("span", {
+                    className: "col-7 noPaddingAndMargin",
+                    children: this.props.name
+                }, void 0, false, {
+                    fileName: "src/scripts/Products/cartproduct.jsx",
+                    lineNumber: 12,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                    className: "col-5 row noPaddingAndMargin",
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("span", {
+                            className: "col-6 inCartProduct",
+                            children: [
+                                "x ",
+                                this.props.quantity
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/scripts/Products/cartproduct.jsx",
+                            lineNumber: 14,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("span", {
+                            className: "col-6 inCartProduct",
+                            children: [
+                                this.props.price,
+                                " kr/st"
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/scripts/Products/cartproduct.jsx",
+                            lineNumber: 15,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Products/cartproduct.jsx",
+                    lineNumber: 13,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/scripts/Products/cartproduct.jsx",
+            lineNumber: 11,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$357d.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"b5aDl":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$f4e3 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$f4e3.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Orders", ()=>Orders
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDom = require("react-dom");
+var _order = require("./order");
+class Orders extends _react.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            orders: 'Du har inte gjort några beställningar än!'
+        };
+    }
+    componentDidMount() {
+        let fetchurl = this.props.myApiUrl + "/orders/" + localStorage.getItem('userId');
+        fetch(fetchurl, {
+            'method': 'get',
+            'headers': {
+                'accept': '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('jwtbearer')}`
+            }
+        }).then((res)=>{
+            if (res.status == 200) res.json().then((list)=>{
+                let ordersList = [];
+                let i = 1;
+                list.forEach((x)=>{
+                    ordersList.push(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_order.Order, {
+                        ...x
+                    }, i, false, {
+                        fileName: "src/scripts/Orders/orders.jsx",
+                        lineNumber: 30,
+                        columnNumber: 41
+                    }, this));
+                    i++;
+                });
+                this.setState({
+                    orders: ordersList
+                });
+            });
+        });
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h3", {
+                    children: "H\xe4r ser du alla dina ordrar"
+                }, void 0, false, {
+                    fileName: "src/scripts/Orders/orders.jsx",
+                    lineNumber: 44,
+                    columnNumber: 16
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("ul", {
+                    className: "row justify-content-around",
+                    children: this.state.orders
+                }, void 0, false, {
+                    fileName: "src/scripts/Orders/orders.jsx",
+                    lineNumber: 45,
+                    columnNumber: 16
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/scripts/Orders/orders.jsx",
+            lineNumber: 43,
+            columnNumber: 12
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$f4e3.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","./order":"asSIC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"asSIC":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$5a29 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$5a29.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Order", ()=>Order
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+class Order extends _react.Component {
+    constructor(props){
+        super(props);
+    }
+    render() {
+        let cart = [];
+        let i = 1;
+        this.props.cart.forEach((p)=>{
+            cart.push(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
+                className: "row",
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h6", {
+                        className: "col-12",
+                        children: p.productName
+                    }, void 0, false, {
+                        fileName: "src/scripts/Orders/order.jsx",
+                        lineNumber: 13,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                        className: "col-12",
+                        children: [
+                            "Pris: ",
+                            p.price
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/scripts/Orders/order.jsx",
+                        lineNumber: 14,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                        className: "col-12",
+                        children: [
+                            "Antal: ",
+                            p.quantity
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/scripts/Orders/order.jsx",
+                        lineNumber: 15,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, i, true, {
+                fileName: "src/scripts/Orders/order.jsx",
+                lineNumber: 12,
+                columnNumber: 18
+            }, this));
+            i++;
+        });
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
+            className: "products",
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h4", {
+                    children: [
+                        "Ordernummer: ",
+                        this.props.id
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Orders/order.jsx",
+                    lineNumber: 21,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h5", {
+                    children: [
+                        "Status: ",
+                        this.props.status
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Orders/order.jsx",
+                    lineNumber: 22,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("b", {
+                            children: "Skapad:"
+                        }, void 0, false, {
+                            fileName: "src/scripts/Orders/order.jsx",
+                            lineNumber: 23,
+                            columnNumber: 20
+                        }, this),
+                        this.props.created
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Orders/order.jsx",
+                    lineNumber: 23,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("b", {
+                            children: "Senast uppdaterad:"
+                        }, void 0, false, {
+                            fileName: "src/scripts/Orders/order.jsx",
+                            lineNumber: 24,
+                            columnNumber: 20
+                        }, this),
+                        this.props.updated
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Orders/order.jsx",
+                    lineNumber: 24,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h5", {
+                    children: "Varor:"
+                }, void 0, false, {
+                    fileName: "src/scripts/Orders/order.jsx",
+                    lineNumber: 25,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("ul", {
+                    children: cart
+                }, void 0, false, {
+                    fileName: "src/scripts/Orders/order.jsx",
+                    lineNumber: 26,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                    children: [
+                        "Summa: ",
+                        this.props.sum,
+                        " kr"
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Orders/order.jsx",
+                    lineNumber: 27,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/scripts/Orders/order.jsx",
+            lineNumber: 20,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$5a29.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"9bnTD":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$4ce2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$4ce2.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Users", ()=>Users
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDom = require("react-dom");
+var _createUserForm = require("./createUserForm");
+var _usersNavbar = require("./users-navbar");
+var _adminUserforms = require("./admin-userforms");
+var _userinfo = require("./userinfo");
+class Users extends _react.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            showAdmin: false,
+            showCreate: true,
+            showUserInfo: false
+        };
+        this.showSelectedPage = this.showSelectedPage.bind(this);
+        this.goToPage = this.goToPage.bind(this);
+    }
+    componentDidMount() {
+        if (this.props.loggedIn) this.setState({
+            showCreate: false,
+            showUserInfo: true
+        });
+    }
+    showSelectedPage(x) {
+        switch(x){
+            case 1:
+                this.setState({
+                    showAdmin: false,
+                    showCreate: true,
+                    showUserInfo: false
+                });
+                break;
+            case 2:
+                this.setState({
+                    showAdmin: false,
+                    showCreate: false,
+                    showUserInfo: true
+                });
+                break;
+            case 3:
+                this.setState({
+                    showAdmin: true,
+                    showCreate: false,
+                    showUserInfo: false
+                });
+                break;
+            default:
+                break;
+        }
+    }
+    goToPage(x) {
+        this.props.showPage(x);
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_usersNavbar.UsersNavbar, {
+                    showPage: this.showSelectedPage,
+                    isAdmin: this.props.isAdmin,
+                    loggedIn: this.props.loggedIn
+                }, void 0, false, {
+                    fileName: "src/scripts/Users/users.jsx",
+                    lineNumber: 59,
+                    columnNumber: 17
+                }, this),
+                this.state.showCreate && /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_createUserForm.CreateUserForm, {
+                    onGoToPage: this.goToPage,
+                    myApiUrl: this.props.myApiUrl
+                }, void 0, false, {
+                    fileName: "src/scripts/Users/users.jsx",
+                    lineNumber: 60,
+                    columnNumber: 43
+                }, this),
+                this.state.showUserInfo && /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_userinfo.UserInfo, {
+                    myApiUrl: this.props.myApiUrl
+                }, void 0, false, {
+                    fileName: "src/scripts/Users/users.jsx",
+                    lineNumber: 61,
+                    columnNumber: 45
+                }, this),
+                this.state.showAdmin && /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_adminUserforms.AdminUserForms, {
+                }, void 0, false, {
+                    fileName: "src/scripts/Users/users.jsx",
+                    lineNumber: 62,
+                    columnNumber: 42
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/scripts/Users/users.jsx",
+            lineNumber: 58,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$4ce2.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","./createUserForm":"8lJ4v","./users-navbar":"6gtg1","./admin-userforms":"dcKAW","./userinfo":"5mF2W","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"8lJ4v":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$fd09 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$fd09.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "CreateUserForm", ()=>CreateUserForm
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDom = require("react-dom");
+class CreateUserForm extends _react.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            address: '',
+            city: '',
+            postalCode: '',
+            isAdmin: false
+        };
+        this.changeIsAdmin = this.changeIsAdmin.bind(this);
+        this.createUser = this.createUser.bind(this);
+        this.goToPage = this.goToPage.bind(this);
+    }
+    changeEmail = (event)=>this.setState({
+            email: event.target.value
+        })
+    ;
+    changePassword = (event)=>this.setState({
+            password: event.target.value
+        })
+    ;
+    changeFirstName = (event)=>this.setState({
+            firstName: event.target.value
+        })
+    ;
+    changeLastName = (event)=>this.setState({
+            lastName: event.target.value
+        })
+    ;
+    changeAddress = (event)=>this.setState({
+            address: event.target.value
+        })
+    ;
+    changeCity = (event)=>this.setState({
+            city: event.target.value
+        })
+    ;
+    changePostalCode = (event)=>this.setState({
+            postalCode: event.target.value
+        })
+    ;
+    changeIsAdmin() {
+        this.setState((prev)=>({
+                isAdmin: prev.isAdmin ? false : true
+            })
+        );
+    }
+    createUser(e) {
+        let data = JSON.stringify(this.state);
+        const fetchUrl = this.props.myApiUrl + '/Users/SignUp';
+        fetch(fetchUrl, {
+            method: 'post',
+            headers: {
+                'accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+            body: data
+        }).then((res)=>{
+            if (res.status === 200) {
+                alert(`Välkommen som kund hos oss ${this.state.firstName}!`);
+                this.goToPage();
+            } else alert("Något oväntat hände. Våra tekniker kommer jobba dygnet runt för att lösa problemet.");
+        });
+        e.preventDefault();
+    }
+    goToPage() {
+        this.props.onGoToPage(1);
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("form", {
+                autoComplete: "off",
+                onSubmit: this.createUser,
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h3", {
+                        children: "Skapa ny anv\xe4ndare"
+                    }, void 0, false, {
+                        fileName: "src/scripts/Users/createUserForm.jsx",
+                        lineNumber: 62,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                        className: "mb-3",
+                        children: [
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                className: "form-label",
+                                children: "Email(anv\xe4ndarnamn)"
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 64,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                required: true,
+                                className: "form-control col-4",
+                                type: "text",
+                                value: this.state.email,
+                                onChange: this.changeEmail
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 65,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                className: "form-label",
+                                children: "L\xf6senord"
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 66,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                required: true,
+                                className: "form-control col-4",
+                                type: "text",
+                                value: this.state.password,
+                                onChange: this.changePassword
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 67,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                className: "form-label",
+                                children: "F\xf6rnamn"
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 68,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                required: true,
+                                className: "form-control col-4",
+                                type: "text",
+                                value: this.state.firstName,
+                                onChange: this.changeFirstName
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 69,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                className: "form-label",
+                                children: "Efternamn"
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 70,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                required: true,
+                                className: "form-control col-4",
+                                type: "text",
+                                value: this.state.lastName,
+                                onChange: this.changeLastName
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 71,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                className: "form-label",
+                                children: "Adress"
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 72,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                required: true,
+                                className: "form-control col-4",
+                                type: "text",
+                                value: this.state.address,
+                                onChange: this.changeAddress
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 73,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                className: "form-label",
+                                children: "Stad"
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 74,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                required: true,
+                                className: "form-control col-4",
+                                type: "text",
+                                value: this.state.city,
+                                onChange: this.changeCity
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 75,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                className: "form-label",
+                                children: "Postnummer"
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 76,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                required: true,
+                                className: "form-control col-4",
+                                type: "text",
+                                value: this.state.postalCode,
+                                onChange: this.changePostalCode
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 77,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                htmlFor: "admin",
+                                className: "form-label",
+                                children: "Vill vara admin"
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 78,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                id: "admin",
+                                type: "checkbox",
+                                checked: this.state.isAdmin,
+                                onChange: this.changeIsAdmin
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 79,
+                                columnNumber: 25
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/scripts/Users/createUserForm.jsx",
+                        lineNumber: 63,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                        type: "submit",
+                        className: "btn btn-primary",
+                        value: "Skapa anv\xe4ndare"
+                    }, void 0, false, {
+                        fileName: "src/scripts/Users/createUserForm.jsx",
+                        lineNumber: 81,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/scripts/Users/createUserForm.jsx",
+                lineNumber: 61,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "src/scripts/Users/createUserForm.jsx",
+            lineNumber: 60,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$fd09.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"6gtg1":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$933b = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$933b.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "UsersNavbar", ()=>UsersNavbar
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDom = require("react-dom");
+class UsersNavbar extends _react.Component {
+    constructor(props){
+        super(props);
+        this.toggleComponent = this.toggleComponent.bind(this);
+    }
+    toggleComponent(component) {
+        this.props.showPage(component);
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("nav", {
+            className: "navbar navbar-default",
+            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                className: "container-fluid",
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                        disabled: this.props.loggedIn,
+                        className: "navbar-brand btn",
+                        onClick: ()=>this.toggleComponent(1)
+                        ,
+                        children: "Skapa anv\xe4ndare"
+                    }, void 0, false, {
+                        fileName: "src/scripts/Users/users-navbar.jsx",
+                        lineNumber: 20,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                        disabled: !this.props.loggedIn,
+                        className: "navbar-brand btn",
+                        onClick: ()=>this.toggleComponent(2)
+                        ,
+                        children: "Din profil"
+                    }, void 0, false, {
+                        fileName: "src/scripts/Users/users-navbar.jsx",
+                        lineNumber: 21,
+                        columnNumber: 21
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                        disabled: !this.props.isAdmin,
+                        className: "navbar-brand btn",
+                        onClick: ()=>this.toggleComponent(3)
+                        ,
+                        children: "Admin"
+                    }, void 0, false, {
+                        fileName: "src/scripts/Users/users-navbar.jsx",
+                        lineNumber: 22,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/scripts/Users/users-navbar.jsx",
+                lineNumber: 19,
+                columnNumber: 17
+            }, this)
+        }, void 0, false, {
+            fileName: "src/scripts/Users/users-navbar.jsx",
+            lineNumber: 18,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$933b.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"dcKAW":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$5452 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$5452.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "AdminUserForms", ()=>AdminUserForms
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDom = require("react-dom");
+class AdminUserForms extends _react.Component {
+    constructor(props){
+        super(props);
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h3", {
+                children: "Denna sektion \xe4r under utveckling 😊 "
+            }, void 0, false, {
+                fileName: "src/scripts/Users/admin-userforms.jsx",
+                lineNumber: 13,
+                columnNumber: 18
+            }, this)
+        }, void 0, false, {
+            fileName: "src/scripts/Users/admin-userforms.jsx",
+            lineNumber: 13,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$5452.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"5mF2W":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$179d = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$179d.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "UserInfo", ()=>UserInfo
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDom = require("react-dom");
+class UserInfo extends _react.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            firstName: "Test",
+            lastName: "Testsson",
+            email: "test@test.com",
+            address: "Testvägen 1",
+            postalCode: "12345",
+            city: "Testby",
+            hideDeleteButton: true
+        };
+        this.showDeleteButton = this.showDeleteButton.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
+    }
+    componentDidMount() {
+        let fetchUrl = this.props.myApiUrl + '/users/' + localStorage.getItem('userId');
+        fetch(fetchUrl, {
+            'method': 'get',
+            'headers': {
+                'accept': '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('jwtbearer')}`
+            }
+        }).then((res)=>{
+            if (res.status === 200) res.json().then((json)=>{
+                this.setState({
+                    firstName: json.firstName,
+                    lastName: json.lastName,
+                    email: json.email,
+                    address: json.address,
+                    postalCode: json.postalCode,
+                    city: json.city
+                });
+            });
+        });
+    }
+    showDeleteButton() {
+        alert("Du aktiverar nu den röda knappen!");
+        this.setState({
+            hideDeleteButton: false
+        });
+    }
+    deleteUser() {
+        let fetchUrl = this.props.myApiUrl + '/users/' + localStorage.getItem('userId');
+        fetch(fetchUrl, {
+            'method': 'delete',
+            'headers': {
+                'accept': '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('jwtbearer')}`
+            }
+        }).then((res)=>{
+            if (res.status === 200) {
+                alert("Du är borttagen ur systemet och loggas nu ut!");
+                localStorage.removeItem('jwtbearer');
+                localStorage.removeItem('userId');
+                location.reload();
+            } else alert("Något gick fel.");
+        });
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h3", {
+                    children: "Anv\xe4ndarprofil"
+                }, void 0, false, {
+                    fileName: "src/scripts/Users/userinfo.jsx",
+                    lineNumber: 73,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h5", {
+                    children: [
+                        "Anv\xe4ndarnamn: ",
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("b", {
+                            children: this.state.email
+                        }, void 0, false, {
+                            fileName: "src/scripts/Users/userinfo.jsx",
+                            lineNumber: 74,
+                            columnNumber: 35
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Users/userinfo.jsx",
+                    lineNumber: 74,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("ul", {
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
+                            children: [
+                                this.state.firstName,
+                                " ",
+                                this.state.lastName
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/scripts/Users/userinfo.jsx",
+                            lineNumber: 76,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
+                            children: this.state.address
+                        }, void 0, false, {
+                            fileName: "src/scripts/Users/userinfo.jsx",
+                            lineNumber: 77,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
+                            children: [
+                                this.state.postalCode,
+                                " ",
+                                this.state.city
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/scripts/Users/userinfo.jsx",
+                            lineNumber: 78,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Users/userinfo.jsx",
+                    lineNumber: 75,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                        className: "btn btn-warning",
+                        onClick: this.showDeleteButton,
+                        children: "Ta bort konto"
+                    }, void 0, false, {
+                        fileName: "src/scripts/Users/userinfo.jsx",
+                        lineNumber: 81,
+                        columnNumber: 21
+                    }, this)
+                }, void 0, false, {
+                    fileName: "src/scripts/Users/userinfo.jsx",
+                    lineNumber: 80,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                        type: "submit",
+                        className: "btn btn-danger",
+                        onClick: this.deleteUser,
+                        hidden: this.state.hideDeleteButton,
+                        children: "Bekr\xe4fta borttagning"
+                    }, void 0, false, {
+                        fileName: "src/scripts/Users/userinfo.jsx",
+                        lineNumber: 84,
+                        columnNumber: 21
+                    }, this)
+                }, void 0, false, {
+                    fileName: "src/scripts/Users/userinfo.jsx",
+                    lineNumber: 83,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/scripts/Users/userinfo.jsx",
+            lineNumber: 72,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$179d.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom":"j6uA9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"cadv7":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$5c06 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$5c06.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Login", ()=>Login
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+class Login extends _react.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            email: '',
+            password: ''
+        };
+        this.login = this.login.bind(this);
+        this.changeUserName = this.changeUserName.bind(this);
+        this.changePassword = this.changePassword.bind(this);
+        this.goToPage = this.goToPage.bind(this);
+        this.setAdmin = this.setAdmin.bind(this);
+        this.setLoggedIn = this.setLoggedIn.bind(this);
+    }
+    login = (e)=>{
+        let data = JSON.stringify(this.state);
+        const fetchUrl = this.props.myApiUrl + '/Users/SignIn';
+        fetch(fetchUrl, {
+            method: 'post',
+            headers: {
+                'accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+            body: data
+        }).then((res)=>{
+            if (res.status === 200) res.json().then((x)=>{
+                localStorage.setItem('jwtbearer', x.jwt);
+                localStorage.setItem('userId', x.userId);
+                this.setAdmin(x.isAdmin);
+                this.setLoggedIn();
+                this.goToPage(2);
+            });
+            else alert("Felaktig inloggning");
+        });
+        e.preventDefault();
+    };
+    setAdmin(isAdmin) {
+        this.props.onAdminSet(isAdmin);
+    }
+    setLoggedIn() {
+        this.props.onLogIn();
+    }
+    changeUserName(event) {
+        this.setState({
+            email: event.target.value
+        });
+    }
+    changePassword(event) {
+        this.setState({
+            password: event.target.value
+        });
+    }
+    goToPage(x) {
+        this.props.onGoToPage(x);
+    }
+    render() {
+        return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            children: [
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("form", {
+                    autoComplete: "off",
+                    onSubmit: this.login,
+                    children: [
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h3", {
+                            children: "Logga in"
+                        }, void 0, false, {
+                            fileName: "src/scripts/Login/login.jsx",
+                            lineNumber: 65,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                            className: "mb-3",
+                            children: [
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "form-label",
+                                    children: "Anv\xe4ndarnamn"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Login/login.jsx",
+                                    lineNumber: 67,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                    required: true,
+                                    type: "text",
+                                    className: "form-control",
+                                    value: this.state.Email,
+                                    onChange: this.changeUserName
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Login/login.jsx",
+                                    lineNumber: 68,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                    className: "mb3",
+                                    children: "L\xf6senord"
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Login/login.jsx",
+                                    lineNumber: 69,
+                                    columnNumber: 25
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                    required: true,
+                                    type: "text",
+                                    className: "form-control",
+                                    value: this.state.password,
+                                    onChange: this.changePassword
+                                }, void 0, false, {
+                                    fileName: "src/scripts/Login/login.jsx",
+                                    lineNumber: 70,
+                                    columnNumber: 25
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/scripts/Login/login.jsx",
+                            lineNumber: 66,
+                            columnNumber: 21
+                        }, this),
+                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                            type: "submit",
+                            className: "btn btn-primary",
+                            children: "Logga in"
+                        }, void 0, false, {
+                            fileName: "src/scripts/Login/login.jsx",
+                            lineNumber: 72,
+                            columnNumber: 21
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/scripts/Login/login.jsx",
+                    lineNumber: 64,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("br", {
+                }, void 0, false, {
+                    fileName: "src/scripts/Login/login.jsx",
+                    lineNumber: 74,
+                    columnNumber: 17
+                }, this),
+                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                    className: "btn btn-warning",
+                    onClick: ()=>this.goToPage(4)
+                    ,
+                    children: "Skapa anv\xe4ndare"
+                }, void 0, false, {
+                    fileName: "src/scripts/Login/login.jsx",
+                    lineNumber: 75,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/scripts/Login/login.jsx",
+            lineNumber: 63,
+            columnNumber: 13
+        }, this));
+    }
+}
+
+  $parcel$ReactRefreshHelpers$5c06.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"d2rMc":[function(require,module,exports) {
+module.exports = JSON.parse("{\"apiurl\":\"https://localhost:7209/api\"}");
+
+},{}]},["kn9T2","7kjSf","6zlig"], "6zlig", "parcelRequiref4f1")
 
 //# sourceMappingURL=index.ccbc111d.js.map

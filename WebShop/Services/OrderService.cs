@@ -31,6 +31,7 @@ namespace WebShopAPI.Services
         public async Task<OrderForUser> CreateAsync(PlaceOrderForm form)
         {
             var userEntity = await _context.Users.FindAsync(form.UserId);
+            if (userEntity == null) return null!;
             var orderEntity = new OrderEntity(form, userEntity!);
             _context.Add(orderEntity);
             await _context.SaveChangesAsync();
