@@ -8,8 +8,7 @@ using WebShopAPI.Services;
 namespace WebShopAPI.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    [AdminApiKey]
+    [ApiController]    
     
     public class CategoriesController : ControllerBase
     {
