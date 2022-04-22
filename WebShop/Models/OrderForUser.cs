@@ -5,8 +5,8 @@ namespace WebShopAPI.Models
     public class OrderForUser
     {
         public int Id { get; set; }
-        public string Created { get; set; }
-        public string Updated { get; private set; }
+        public string Created { get; set; } = null!;
+        public string Updated { get; private set; } = null!;
         public string UserName { get; set; } = null!;
         public string Status { get; set; } = null!;
         public List<OrderedProduct> Cart { get; set; } = new List<OrderedProduct>();

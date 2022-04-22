@@ -30,13 +30,13 @@ namespace WebShopAPI.Controllers
         public async Task<IActionResult> CreateProduct(ProductForm form)
         {
             var product = await _productService.CreateAsync(form);
-            return (product == null) ? new BadRequestResult() : new OkObjectResult(product);
+            return (product == null) ? new BadRequestResult() : Ok(product);
         }
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IEnumerable<Product>> GetAllProducts()
-        {
+        {            
             return await _productService.GetAllAsync();
         }
 
