@@ -1,0 +1,43 @@
+// *{
+//     border: 2px solid red;
+// }
+.products {
+    padding: 10px;
+    margin: 10px;
+    
+    border-radius: 10px;
+    border: 2px solid gray;
+}
+.mybutton{
+    color: rgb(73, 114, 128);
+}
+.mybutton:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: blue;
+}
+ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.navbar {
+    margin-top: 10px;
+}
+.cart {
+    padding-bottom: 10px;    
+    border-bottom: 2px dotted black;
+    
+}
+.inCartProduct{
+    text-align: right;
+    padding: 0;
+    margin: 0;
+}
+.noPaddingAndMargin{
+    padding: 0;
+    margin: 0;
+}
+.topborder{
+    border-top: 1px solid black;
+}
