@@ -24733,6 +24733,7 @@ class CreateUserForm extends _react.Component {
         this.state = {
             email: '',
             password: '',
+            password2: '',
             firstName: '',
             lastName: '',
             address: '',
@@ -24750,6 +24751,10 @@ class CreateUserForm extends _react.Component {
     ;
     changePassword = (event)=>this.setState({
             password: event.target.value
+        })
+    ;
+    changePassword2 = (event)=>this.setState({
+            password2: event.target.value
         })
     ;
     changeFirstName = (event)=>this.setState({
@@ -24779,6 +24784,11 @@ class CreateUserForm extends _react.Component {
         );
     }
     createUser(e) {
+        if (this.state.password !== this.state.password2) {
+            alert("Lösenorden matchar inte.");
+            e.preventDefault();
+            return;
+        }
         let data = JSON.stringify(this.state);
         const fetchUrl = this.props.myApiUrl + '/Users/SignUp';
         fetch(fetchUrl, {
@@ -24809,7 +24819,7 @@ class CreateUserForm extends _react.Component {
                         children: "Skapa ny anv\xe4ndare"
                     }, void 0, false, {
                         fileName: "src/scripts/Users/createUserForm.jsx",
-                        lineNumber: 62,
+                        lineNumber: 69,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
@@ -24820,7 +24830,7 @@ class CreateUserForm extends _react.Component {
                                 children: "Email(anv\xe4ndarnamn)"
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 64,
+                                lineNumber: 71,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -24831,7 +24841,7 @@ class CreateUserForm extends _react.Component {
                                 onChange: this.changeEmail
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 65,
+                                lineNumber: 72,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
@@ -24839,18 +24849,37 @@ class CreateUserForm extends _react.Component {
                                 children: "L\xf6senord"
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 66,
+                                lineNumber: 73,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
                                 required: true,
                                 className: "form-control col-4",
-                                type: "text",
+                                type: "password",
                                 value: this.state.password,
                                 onChange: this.changePassword
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 67,
+                                lineNumber: 74,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                className: "form-label",
+                                children: "Upprepa l\xf6senord"
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 75,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                required: true,
+                                className: "form-control col-4",
+                                type: "password",
+                                value: this.state.password2,
+                                onChange: this.changePassword2
+                            }, void 0, false, {
+                                fileName: "src/scripts/Users/createUserForm.jsx",
+                                lineNumber: 76,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
@@ -24858,7 +24887,7 @@ class CreateUserForm extends _react.Component {
                                 children: "F\xf6rnamn"
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 68,
+                                lineNumber: 77,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -24869,7 +24898,7 @@ class CreateUserForm extends _react.Component {
                                 onChange: this.changeFirstName
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 69,
+                                lineNumber: 78,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
@@ -24877,7 +24906,7 @@ class CreateUserForm extends _react.Component {
                                 children: "Efternamn"
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 70,
+                                lineNumber: 79,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -24888,7 +24917,7 @@ class CreateUserForm extends _react.Component {
                                 onChange: this.changeLastName
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 71,
+                                lineNumber: 80,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
@@ -24896,7 +24925,7 @@ class CreateUserForm extends _react.Component {
                                 children: "Adress"
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 72,
+                                lineNumber: 81,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -24907,7 +24936,7 @@ class CreateUserForm extends _react.Component {
                                 onChange: this.changeAddress
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 73,
+                                lineNumber: 82,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
@@ -24915,7 +24944,7 @@ class CreateUserForm extends _react.Component {
                                 children: "Stad"
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 74,
+                                lineNumber: 83,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -24926,7 +24955,7 @@ class CreateUserForm extends _react.Component {
                                 onChange: this.changeCity
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 75,
+                                lineNumber: 84,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
@@ -24934,7 +24963,7 @@ class CreateUserForm extends _react.Component {
                                 children: "Postnummer"
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 76,
+                                lineNumber: 85,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -24945,7 +24974,7 @@ class CreateUserForm extends _react.Component {
                                 onChange: this.changePostalCode
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 77,
+                                lineNumber: 86,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
@@ -24954,7 +24983,7 @@ class CreateUserForm extends _react.Component {
                                 children: "Vill vara admin"
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 78,
+                                lineNumber: 87,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -24964,13 +24993,13 @@ class CreateUserForm extends _react.Component {
                                 onChange: this.changeIsAdmin
                             }, void 0, false, {
                                 fileName: "src/scripts/Users/createUserForm.jsx",
-                                lineNumber: 79,
+                                lineNumber: 88,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/scripts/Users/createUserForm.jsx",
-                        lineNumber: 63,
+                        lineNumber: 70,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -24979,18 +25008,18 @@ class CreateUserForm extends _react.Component {
                         value: "Skapa anv\xe4ndare"
                     }, void 0, false, {
                         fileName: "src/scripts/Users/createUserForm.jsx",
-                        lineNumber: 81,
+                        lineNumber: 90,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/scripts/Users/createUserForm.jsx",
-                lineNumber: 61,
+                lineNumber: 68,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "src/scripts/Users/createUserForm.jsx",
-            lineNumber: 60,
+            lineNumber: 67,
             columnNumber: 13
         }, this));
     }
@@ -25419,7 +25448,7 @@ class Login extends _react.Component {
                                 }, this),
                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
                                     required: true,
-                                    type: "text",
+                                    type: "password",
                                     className: "form-control",
                                     value: this.state.password,
                                     onChange: this.changePassword

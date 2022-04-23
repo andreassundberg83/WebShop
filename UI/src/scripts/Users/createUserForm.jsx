@@ -7,6 +7,7 @@ export class CreateUserForm extends React.Component {
         this.state = {
             email: '',
             password: '',
+            password2: '',
             firstName: '',
             lastName: '',
             address: '',
@@ -20,6 +21,7 @@ export class CreateUserForm extends React.Component {
     }
     changeEmail = (event) => this.setState({ email: event.target.value })
     changePassword = (event) => this.setState({ password: event.target.value })
+    changePassword2 = (event) => this.setState({ password2: event.target.value })
     changeFirstName = (event) => this.setState({ firstName: event.target.value })
     changeLastName = (event) => this.setState({ lastName: event.target.value })
     changeAddress = (event) => this.setState({ address: event.target.value })
@@ -31,6 +33,11 @@ export class CreateUserForm extends React.Component {
         }))
     }
     createUser(e) {
+        if (this.state.password !== this.state.password2) {
+            alert("Lösenorden matchar inte.");
+            e.preventDefault();
+            return;
+        }
         let data = JSON.stringify(this.state);
         const fetchUrl = this.props.myApiUrl + '/Users/SignUp';        
         fetch(fetchUrl, {
@@ -64,7 +71,9 @@ export class CreateUserForm extends React.Component {
                         <label className="form-label">Email(användarnamn)</label>
                         <input required className="form-control col-4" type="text" value={this.state.email} onChange={this.changeEmail} />
                         <label className="form-label">Lösenord</label>
-                        <input required className="form-control col-4" type="text" value={this.state.password} onChange={this.changePassword} />
+                        <input required className="form-control col-4" type="password" value={this.state.password} onChange={this.changePassword} />
+                        <label className="form-label">Upprepa lösenord</label>
+                        <input required className="form-control col-4" type="password" value={this.state.password2} onChange={this.changePassword2} />
                         <label className="form-label">Förnamn</label>
                         <input required className="form-control col-4" type="text" value={this.state.firstName} onChange={this.changeFirstName} />
                         <label className="form-label">Efternamn</label>

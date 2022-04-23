@@ -67,7 +67,7 @@ export class Login extends React.Component {
                         <label className="form-label">Användarnamn</label>
                         <input required type="text" className="form-control" value={this.state.Email} onChange={this.changeUserName} />
                         <label className="mb3">Lösenord</label>
-                        <input required type="text" className="form-control" value={this.state.password} onChange={this.changePassword} />
+                        <input required type="password" className="form-control" value={this.state.password} onChange={this.changePassword} />
                     </div>
                     <button type="submit" className="btn btn-primary">Logga in</button>
                 </form>
